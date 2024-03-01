@@ -5,8 +5,8 @@ from aws_cdk import (
 )
 from constructs import Construct
 
-class MsTeamsNotificationStack(Stack):
 
+class MsTeamsNotificationStack(Stack):
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
@@ -17,3 +17,12 @@ class MsTeamsNotificationStack(Stack):
         #     self, "MsTeamsNotificationQueue",
         #     visibility_timeout=Duration.seconds(300),
         # )
+
+    def create_cloudwatch_alarm(self):
+        ...
+
+    def create_sns_topic(self):
+        ...
+
+    def create_notification_lambda(self):
+        ...
