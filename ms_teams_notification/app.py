@@ -8,7 +8,7 @@ from ms_teams_notification_infrastructure.ms_teams_notification_stack import (
 app = cdk.App()
 MsTeamsNotificationStack(
     app,
-    "MsTeamsNotificationStack",
+    "DemoMsTeamsNotificationStack",
 )
 
 app.synth()
