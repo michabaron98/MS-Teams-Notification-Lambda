@@ -1,7 +1,7 @@
 import aws_cdk as core
 import aws_cdk.assertions as assertions
 
-from ms_teams_notification_infrastructure.ms_teams_notification_stack import (
+from infrastructure.ms_teams_notification_stack import (
     MsTeamsNotificationStack,
 )
 
