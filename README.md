@@ -1,6 +1,9 @@
 # ms_teams_notification_lambda
-Notification for AWS CloudWatch Alarms on Microsoft Teams
+Notification for AWS CloudWatch Alarms on Microsoft Teams. Check my [other projects](https://linktr.ee/michal_baron)
 
+Stack:
+- Python
+- AWS Cloud Development Kit
 ## Introduction
 
 **TODO: describe your project in one or two sentences.**
@@ -11,6 +14,7 @@ This repository consists of the following elements:
 
  - `infrastructure` - contains the CDK code for the project
  - `.pre-commit-config.yaml` - parent configuration used by `pre-commit`
+ - `tests` - AWS stack unit tests - It will be developed in future.
  - `requirements*.txt` - requirements used in project
 
 ## Local setup
