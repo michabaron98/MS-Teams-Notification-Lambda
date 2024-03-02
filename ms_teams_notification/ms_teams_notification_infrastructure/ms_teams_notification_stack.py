@@ -4,6 +4,9 @@ from aws_cdk import (
     aws_cloudwatch_actions as cw_actions,
     Duration,
     aws_sns as sns,
+    aws_sns_subscriptions,
+    aws_secretsmanager as secrets,
+    aws_lambda,
 )
 from constructs import Construct
 
@@ -15,6 +18,9 @@ class MsTeamsNotificationStack(Stack):
         sns_topic = self.create_sns_topic()
         self.create_cloudwatch_alarm(
             namespace="AWS/Lambda", metric_name="Invocations", sns_topic=sns_topic
+        )
+        self.create_notification_lambda(
+            ms_teams_secret_arn="YOUR SECRET ARN", sns_topic=sns_topic
         )
 
     def create_cloudwatch_alarm(
@@ -57,5 +63,36 @@ class MsTeamsNotificationStack(Stack):
             display_name="Demo cloud watch Notifications",
         )
 
-    def create_notification_lambda(self):
-        ...
+    def create_notification_lambda(
+        self,
+        ms_teams_secret_arn: str,
+        sns_topic: sns.Topic,
+    ):
+        notify_teams_lambda = aws_lambda.Function(
+            self,
+            "DemoNotifyMSTeamsHandler",
+            function_name=f"notify-msteams-lambda",
+            runtime=aws_lambda.Runtime.PYTHON_3_9,
+            code=aws_lambda.Code.from_asset(
+                "src",
+            ),
+            handler="ms_teams_notification_lambda.lambda_handler",
+            environment={
+                "SECRET_NAME": ms_teams_secret_arn,
+                "SECRET_REGION": self.region,
+                "LOG_LEVEL": "INFO",
+            },
+            timeout=Duration.seconds(10),
+        )
+
+        msteams_webhook_secret = secrets.Secret.from_secret_complete_arn(
+            scope=self,
+            id="secretHook",
+            secret_complete_arn=ms_teams_secret_arn,
+        )
+
+        msteams_webhook_secret.grant_read(grantee=notify_teams_lambda)
+
+        sns_topic.add_subscription(
+            aws_sns_subscriptions.LambdaSubscription(notify_teams_lambda)
+        )
