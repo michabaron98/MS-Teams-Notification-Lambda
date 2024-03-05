@@ -1,4 +1,4 @@
-# ms_teams_notification_lambda
+# MS Teams Notification Lambda
 Notification for AWS CloudWatch Alarms on Microsoft Teams. Check my [other projects](https://linktr.ee/michal_baron)
 
 Stack:
