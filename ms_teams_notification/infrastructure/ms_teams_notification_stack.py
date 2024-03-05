@@ -20,7 +20,8 @@ class MsTeamsNotificationStack(Stack):
             namespace="AWS/Lambda", metric_name="Invocations", sns_topic=sns_topic
         )
         self.create_notification_lambda(
-            ms_teams_secret_arn="YOUR SECRET ARN", sns_topic=sns_topic
+            ms_teams_secret_arn="arn:aws:secretsmanager:REGION:ACCOUNT_ID:secret:YOUR_SECRET_ARN",
+            sns_topic=sns_topic,
         )
 
     def create_cloudwatch_alarm(
@@ -74,7 +75,7 @@ class MsTeamsNotificationStack(Stack):
             function_name=f"notify-msteams-lambda",
             runtime=aws_lambda.Runtime.PYTHON_3_9,
             code=aws_lambda.Code.from_asset(
-                "src",
+                "infrastructure/src",
             ),
             handler="ms_teams_notification_lambda.lambda_handler",
             environment={
