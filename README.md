@@ -4,9 +4,6 @@ Notification for AWS CloudWatch Alarms on Microsoft Teams. Check my [other proje
 Stack:
 - Python
 - AWS Cloud Development Kit
-## Introduction
-
-**TODO: describe your project in one or two sentences.**
 
 ## Structure
 
